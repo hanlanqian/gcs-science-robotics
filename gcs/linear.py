@@ -44,8 +44,10 @@ class LinearGCS(BaseGCS):
             v = vertices[jj]
             edge = self.gcs.AddEdge(u, v, f"({u.name()}, {v.name()})")
 
-            edge_length = edge.AddCost(Binding[Cost](
-                self.edge_cost, np.append(u.x(), v.x())))[1]
+            # edge_length = edge.AddCost(Binding[Cost](
+            #     self.edge_cost, np.append(u.x(), v.x())))[1]
+            edge.AddCost(Binding[Cost](
+                self.edge_cost, np.append(u.x(), v.x())))
 
             # Constrain point in v to be in u
             edge.AddConstraint(Binding[Constraint](

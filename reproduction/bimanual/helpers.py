@@ -151,8 +151,8 @@ def getDemoConfigurations():
          -0.69312891,  0.36303794,  0.66625426, -1.49515975, -0.32300928, -0.10942832,  0.0949629],
         [0.2014604,  0.66463495,  0.16799372, -1.66212763, -0.09131682, -0.64368844, -0.03645568,
          -0.38777291,  0.56141139, -0.05760515, -0.47447495,  0.06515541,  0.63627899, -0.02552148],
-        [-1.8487163 ,  0.71749397,  0.66464618, -1.4912954 , -0.52882233, 1.0096015 , -2.62844995,
-         1.43620829,  0.70451542, -0.01532988, -1.34999693, -0.00550105,  1.18684923, -0.14400234],
+        # [-1.8487163 ,  0.71749397,  0.66464618, -1.4912954 , -0.52882233, 1.0096015 , -2.62844995,
+        #  1.43620829,  0.70451542, -0.01532988, -1.34999693, -0.00550105,  1.18684923, -0.14400234],
     ]
 
 def generateDemoConfigurations(plant, context, wsg1_id, wsg2_id):
@@ -381,7 +381,10 @@ def visualize_trajectory(traj, meshcat):
     plant.RegisterAsSourceForSceneGraph(scene_graph)
     parser = Parser(plant)
     parser.package_map().Add("gcs", GcsDir())
-
+    parser.package_map().Remove("drake")
+    parser.package_map().Add("drake", "/home/elaina/projects")
+    parser.package_map().Remove("drake_models")
+    parser.package_map().Add("drake_models", "/home/elaina/projects/manipulation/models")
     directives_file = FindModelFile("models/bimanual_iiwa.yaml")
     directives = LoadModelDirectives(directives_file)
     models = ProcessModelDirectives(directives, plant, parser)
@@ -441,6 +444,10 @@ def generate_segment_pics(traj, segment, meshcat):
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=0.0)
     parser = Parser(plant, scene_graph)
     parser.package_map().Add("gcs", GcsDir())
+    parser.package_map().Remove("drake")
+    parser.package_map().Add("drake", "/home/elaina/projects")
+    parser.package_map().Remove("drake_models")
+    parser.package_map().Add("drake_models", "/home/elaina/projects/manipulation/models")
     directives_file = FindModelFile("models/bimanual_iiwa.yaml")
     iiwa_file = FindResourceOrThrow(
         "drake/manipulation/models/iiwa_description/urdf/iiwa14_spheres_collision.urdf")
